@@ -1,0 +1,26 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Aug 19 14:13:04 2019
+
+@author: Student
+"""
+
+import csv 
+a=[]
+with open('enjoysport.csv') as traindata:
+    for row in csv.reader(traindata):
+        a.append(row)
+        print(row)
+n=len(a[0])-1
+print("Most general hypothesis:",["?"]*n)
+print("Most specific hypothesis:",["0"]*n)
+h=a[0][:-1]
+print("\n find S algo")
+for i in range(len(a)):
+    if a[i][n]=="yes":
+        for j in range(n):
+            if a[i][j]!=h[j]:
+                h[j]='?'
+    print("training example no:".format(i+1),h)
+    print("hypothesis is:",h)
+print("maximially specific hypothesis for training set is ",h)
