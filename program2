@@ -1,0 +1,41 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Aug 19 14:26:54 2019
+
+@author: Student
+"""
+
+import csv 
+a=[]
+with open('car.csv') as traindata:
+    for row in csv.reader(traindata):
+        a.append(row)
+        print(row)
+n=len(a[0])-1
+g=['?']*n
+s=['0']*n
+print("Most general hypothesis:",g)
+print("Most specific hypothesis:",s)
+s=a[0][:-1]
+temp=[]
+print("\n candidate elimination algo\n")
+for i in range(len(a)):
+    if a[i][n]=="pos":
+        for j in range(n):
+            if a[i][j]!=s[j]:
+                s[j]='?'
+        for j in range(n):
+            for k in range(len(temp)-1):
+                if temp[k][j]!='?' and temp[k][j]!=s[j]:
+                    del temp[k]
+    if a[i][n]=="neg":
+        for j in range(n):
+            if s[j]!=a[i][j] and s[j]!='?':
+             g[j]=s[j]
+             temp.append(g)
+             g=['?']*n
+    print("\ntraining example no:".format(i+1),s)
+    if (len(temp)==0):
+        print("for training ex {0} the hypothesis is g{0}".format(i+1),g)
+    else:
+        print("for training ex {0} the hypothesis is g{0}".format(i+1),temp)
